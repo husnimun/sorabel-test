@@ -1,7 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { fetchProductById, clearProduct } from '../../store/actions'
+import {
+  fetchProductById,
+  clearProduct,
+  openBuyModal,
+} from '../../store/actions'
+import {
+  getAvailableColor,
+  getAvailableSize,
+} from '../../helpers/product-helpers'
 
 const ProductWrapper = styled.div`
   background-color: #fff;
@@ -31,6 +39,23 @@ const ProductPrice = styled.div`
   font-size: 20px;
 `
 
+const StyledButton = styled.button`
+  padding: 8px 16px;
+  border-color: rgb(172, 20, 90);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 8px;
+  background-color: rgb(172, 20, 90);
+  text-align: center;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+  display: inline-block;
+`
+
 class Product extends React.Component {
   state = {
     isLoading: true,
@@ -53,7 +78,7 @@ class Product extends React.Component {
     if (isLoading) {
       return <div />
     } else {
-      const { product } = this.props
+      const { product, openBuyModal } = this.props
       return (
         <ProductWrapper>
           <img src={product.images[0].fullUrl} alt={product.title} />
@@ -65,7 +90,20 @@ class Product extends React.Component {
             <SummaryTitle>Bahan</SummaryTitle>
             {product.material}
           </SummaryDivider>
-          <SummaryDivider>Warna Ukuran</SummaryDivider>
+          <SummaryDivider>
+            <p>Warna: {getAvailableColor(product.variants).join(', ')}</p>
+            <p>Ukuran: {getAvailableSize(product.variants).join(', ')}</p>
+          </SummaryDivider>
+          <SummaryDivider>
+            <StyledButton
+              style={{ display: 'block', width: '100%' }}
+              onClick={() => {
+                openBuyModal(product)
+              }}
+            >
+              Beli Sekarang
+            </StyledButton>
+          </SummaryDivider>
         </ProductWrapper>
       )
     }
@@ -89,6 +127,9 @@ function mapDispatchToProps(dispatch) {
     },
     clearProduct() {
       dispatch(clearProduct())
+    },
+    openBuyModal(product) {
+      dispatch(openBuyModal(product))
     },
   }
 }

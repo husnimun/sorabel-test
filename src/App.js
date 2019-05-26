@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Provider } from 'react-redux'
 import ProductList from './components/ProductList'
 import Product from './components/Product/Product'
+import BuyModal from './components/BuyModal'
 import store from './store'
 
 const AppContainer = styled.div`
@@ -21,6 +22,7 @@ function App() {
             <Route exact path="/" component={ProductList} />
             <Route path="/products/:id" component={Product} />
           </Switch>
+          <BuyModal />
         </AppContainer>
       </Router>
     </Provider>

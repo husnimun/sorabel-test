@@ -1,8 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchProducts, clearProducts } from '../../store/actions'
-import styled from 'styled-components'
+import { fetchProducts, clearProducts, openBuyModal } from '../../store/actions'
+import styled, { css } from 'styled-components'
+import { getAvailableSize } from '../../helpers/product-helpers'
+
+const Flex = styled.div`
+  display: flex;
+`
+const FlexItem = styled.div`
+  ${props =>
+    props.flexSize &&
+    css`
+      flex: ${props.flexSize};
+    `}
+  ${props =>
+    props.alignCenter &&
+    css`
+      margin-top: auto;
+      margin-bottom: auto;
+    `}
+`
 
 const ProductDetail = styled.div`
   background-color: #fff;
@@ -18,12 +36,24 @@ const ProductImageContainer = styled.div`
     object-fit: cover;
   }
 `
+const StyledButton = styled.button`
+  padding: 8px 16px;
+  border-color: rgb(172, 20, 90);
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 8px;
+  background-color: rgb(172, 20, 90);
+  text-align: center;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+  display: inline-block;
+`
 
-function Title({ className, title }) {
-  return <h2 className={className}>{title}</h2>
-}
-
-const StyledTitle = styled(Title)`
+const StyledTitle = styled.h2`
   color: rgb(82, 82, 82);
   font-size: 16px;
   font-weight: normal;
@@ -31,34 +61,13 @@ const StyledTitle = styled(Title)`
   margin-bottom: 8px;
 `
 
-function Price({ className, amount }) {
-  return <div className={className}>{amount}</div>
-}
-
-const StyledPrice = styled(Price)`
+const StyledPrice = styled.div`
   color: rgb(82, 82, 82);
   font-size: 18px;
   font-weight: bold;
 `
 
-function getAvailableSize(variants) {
-  let sizeMap = {}
-  return variants.reduce((acc, variant) => {
-    if (variant.quantity > 0 && !sizeMap[variant.size]) {
-      sizeMap[variant.size] = true
-      acc.push(variant.size)
-    }
-    return acc
-  }, [])
-}
-
-function SizeLabel({ className, variants }) {
-  return (
-    <div className={className}>{getAvailableSize(variants).join(', ')}</div>
-  )
-}
-
-const StyledSizeLabel = styled(SizeLabel)`
+const StyledSizeLabel = styled.span`
   display: inline-block;
   color: rgb(128, 128, 128);
   background-color: rgb(232, 232, 232);
@@ -68,6 +77,10 @@ const StyledSizeLabel = styled(SizeLabel)`
 `
 
 class ProductList extends React.Component {
+  state = {
+    isBuyModalOpen: false,
+  }
+
   componentDidMount() {
     const { fetchProducts } = this.props
     fetchProducts()
@@ -77,6 +90,7 @@ class ProductList extends React.Component {
     const { clearProducts } = this.props
     clearProducts()
   }
+
   render() {
     const { products } = this.props
     return products.map(product => (
@@ -87,9 +101,24 @@ class ProductList extends React.Component {
           </ProductImageContainer>
         </Link>
         <ProductDetail>
-          <StyledTitle title={product.title} />
-          <StyledSizeLabel variants={product.variants} />
-          <StyledPrice amount={product.price.amount} />
+          <Flex>
+            <FlexItem flexSize={3}>
+              <StyledTitle>{product.title}</StyledTitle>
+              <StyledSizeLabel>
+                {getAvailableSize(product.variants).join(', ')}
+              </StyledSizeLabel>
+              <StyledPrice>{product.price.amount}</StyledPrice>
+            </FlexItem>
+            <FlexItem flexSize={1} alignCenter style={{ textAlign: 'right' }}>
+              <StyledButton
+                onClick={() => {
+                  this.props.openBuyModal(product)
+                }}
+              >
+                Beli
+              </StyledButton>
+            </FlexItem>
+          </Flex>
         </ProductDetail>
       </div>
     ))
@@ -109,6 +138,9 @@ function mapDispatchToProps(dispatch) {
     },
     clearProducts() {
       dispatch(clearProducts())
+    },
+    openBuyModal(product) {
+      dispatch(openBuyModal(product))
     },
   }
 }
