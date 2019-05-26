@@ -1,7 +1,13 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import reducers from './reducers'
 import thunk from 'redux-thunk'
 
-const store = createStore(reducers, applyMiddleware(thunk))
+const store = createStore(
+  reducers,
+  compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+)
 
 export default store
