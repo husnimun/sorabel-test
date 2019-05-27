@@ -1,7 +1,6 @@
 import React from 'react'
 import Modal from 'react-modal'
 import { connect } from 'react-redux'
-import { closeBuyModal, showNotificationWithTimeout } from '../../store/actions'
 import styled, { css } from 'styled-components'
 import {
   getAvailableColor,
@@ -11,6 +10,8 @@ import {
 } from '../../helpers/product-helpers'
 import { Flex, FlexItem } from '../common/Flex'
 import { Divider } from '../common/Divider'
+import { closeBuyModal } from '../../store/actions/buyModal'
+import { showNotificationWithTimeout } from '../../store/actions/notifications'
 
 Modal.setAppElement('#root')
 

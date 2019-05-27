@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Observer from '@researchgate/react-intersection-observer'
 import styled from 'styled-components'
-import { fetchProducts, clearProducts, openBuyModal } from '../../store/actions'
 import { getAvailableSize } from '../../helpers/product-helpers'
 import { Flex, FlexItem } from '../common/Flex'
 import { StyledButton } from '../common/StyledButton'
 import { Loader } from '../common/Loader'
+import { fetchProducts, clearProducts } from '../../store/actions/products'
+import { openBuyModal } from '../../store/actions/buyModal'
 
 const ProductDetail = styled.div`
   background-color: #fff;

@@ -2,16 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import {
-  fetchProductById,
-  clearProduct,
-  openBuyModal,
-} from '../../store/actions'
-import {
   getAvailableColor,
   getAvailableSize,
 } from '../../helpers/product-helpers'
 import { Divider } from '../common/Divider'
 import { StyledButton } from '../common/StyledButton'
+import { fetchProductById, clearProduct } from '../../store/actions/product'
+import { openBuyModal } from '../../store/actions/buyModal'
 
 const ProductWrapper = styled.div`
   background-color: #fff;
