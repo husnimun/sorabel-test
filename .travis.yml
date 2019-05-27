@@ -1,0 +1,10 @@
+language:
+  node_js
+node_js:
+  - "10"
+before_script:
+  - yarn
+script:
+  - yarn test --coverage --watchAll=false
+after_success:
+  - npx codecov --token=$CODECOV_TOKEN
