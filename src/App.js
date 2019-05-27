@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import ProductList from './components/ProductList'
 import Product from './components/Product/Product'
 import BuyModal from './components/BuyModal'
+import Notifications from './components/Notifications'
 import store from './store'
 
 const AppContainer = styled.div`
@@ -16,6 +17,7 @@ const AppContainer = styled.div`
 function App() {
   return (
     <Provider store={store}>
+      <Notifications />
       <Router>
         <AppContainer>
           <Switch>

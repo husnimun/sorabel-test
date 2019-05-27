@@ -6,6 +6,8 @@ import {
   CLEAR_PRODUCT,
   OPEN_BUY_MODAL,
   CLOSE_BUY_MODAL,
+  SHOW_NOTIFICATION,
+  HIDE_NOTIFICATION,
 } from '../actions'
 
 describe('test suite for redux reducers', () => {
@@ -119,5 +121,48 @@ describe('test suite for redux reducers', () => {
     }
 
     expect(reducers.isBuyModalOpen(initialState, action)).toEqual(false)
+  })
+
+  test('notifications reducer: should add notification', () => {
+    const initialState = []
+    const notifications = [
+      {
+        text: 'Notification',
+        id: 1,
+      },
+    ]
+    const action = {
+      type: SHOW_NOTIFICATION,
+      ...notifications[0],
+    }
+
+    expect(reducers.notifications(initialState, action)).toEqual(notifications)
+  })
+
+  test('notifications reducer: should remove notification', () => {
+    const initialState = [
+      {
+        id: 1,
+        text: 'Notification',
+      },
+      {
+        id: 2,
+        text: 'Notification',
+      },
+    ]
+
+    const action = {
+      type: HIDE_NOTIFICATION,
+      id: 1,
+    }
+
+    const expected = [
+      {
+        id: 2,
+        text: 'Notification',
+      },
+    ]
+
+    expect(reducers.notifications(initialState, action)).toEqual(expected)
   })
 })

@@ -6,6 +6,8 @@ import {
   CLEAR_PRODUCTS,
   OPEN_BUY_MODAL,
   CLOSE_BUY_MODAL,
+  SHOW_NOTIFICATION,
+  HIDE_NOTIFICATION,
 } from './actions'
 
 export function products(state = [], action) {
@@ -43,10 +45,22 @@ export function isBuyModalOpen(state = false, action) {
   }
 }
 
+export function notifications(state = [], action) {
+  switch (action.type) {
+    case SHOW_NOTIFICATION:
+      return [...state, { id: action.id, text: action.text }]
+    case HIDE_NOTIFICATION:
+      return state.filter(notification => notification.id !== action.id)
+    default:
+      return state
+  }
+}
+
 const reducers = combineReducers({
   products,
   product,
   isBuyModalOpen,
+  notifications,
 })
 
 export default reducers

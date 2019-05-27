@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal'
 import { connect } from 'react-redux'
-import { closeBuyModal } from '../../store/actions'
+import { closeBuyModal, showNotificationWithTimeout } from '../../store/actions'
 import styled, { css } from 'styled-components'
 import {
   getAvailableColor,
@@ -76,8 +76,10 @@ class BuyModal extends React.Component {
   componentDidUpdate() {
     const { selectedSize, selectedColor } = this.state
     if (selectedSize && selectedColor) {
+      this.props.showNotificationWithTimeout(
+        'Barang sista berhasil masuk ke keranjang'
+      )
       this.props.handleClose()
-      alert('Barang sista berhasil masuk ke keranjang')
       this.resetState()
     }
   }
@@ -221,6 +223,9 @@ function mapDispatchToProps(dispatch) {
   return {
     handleClose() {
       dispatch(closeBuyModal())
+    },
+    showNotificationWithTimeout(text) {
+      dispatch(showNotificationWithTimeout(text))
     },
   }
 }

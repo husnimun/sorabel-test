@@ -52,4 +52,23 @@ describe('test suite for redux actions', () => {
 
     expect(actions.closeBuyModal()).toEqual(expectedAction)
   })
+
+  it('should create action to show notification', () => {
+    const expectedAction = {
+      type: actions.SHOW_NOTIFICATION,
+      id: 1,
+      text: 'notification',
+    }
+
+    expect(actions.showNotification(1, 'notification')).toEqual(expectedAction)
+  })
+
+  it('should create action to hide notification', () => {
+    const expectedAction = {
+      type: actions.HIDE_NOTIFICATION,
+      id: 1,
+    }
+
+    expect(actions.hideNotification(1)).toEqual(expectedAction)
+  })
 })
