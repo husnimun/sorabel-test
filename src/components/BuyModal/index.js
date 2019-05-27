@@ -98,7 +98,7 @@ class BuyModal extends React.Component {
     return availableColor.map((color, index) => (
       <VariantButton
         type="button"
-        disabled={!availabilityOfFilteredVariants[color]}
+        disabled={selectedSize && !availabilityOfFilteredVariants[color]}
         selected={color === this.state.selectedColor}
         key={`${product.id}-color-${index}`}
         onClick={() => {
@@ -126,7 +126,7 @@ class BuyModal extends React.Component {
     return availableSize.map((size, index) => (
       <VariantButton
         selected={size === this.state.selectedSize}
-        disabled={!availabilityOfFilteredVariants[size]}
+        disabled={selectedColor && !availabilityOfFilteredVariants[size]}
         key={`${product.id}-size-${index}`}
         onClick={() => {
           this.setState({ selectedSize: size })
