@@ -3,17 +3,25 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 You can see the demo at [https://hungry-blackwell-1933ed.netlify.com/](https://hungry-blackwell-1933ed.netlify.com/)
 
+## Products API
+Products data are stored at [MockAPI](www.mockapi.io/) as JSON. Because of its limitation, there are only 16 products available from the API.
+
+
+## Dependencies
+* Node
+* Yarn
+
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `yarn`
+Installs `node_modules`
 
 ### `yarn start`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
 
 ### `yarn test`
 
