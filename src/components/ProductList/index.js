@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchProducts, clearProducts, openBuyModal } from '../../store/actions'
+import Observer from '@researchgate/react-intersection-observer'
 import styled from 'styled-components'
+import { fetchProducts, clearProducts, openBuyModal } from '../../store/actions'
 import { getAvailableSize } from '../../helpers/product-helpers'
 import { Flex, FlexItem } from '../common/Flex'
 import { StyledButton } from '../common/StyledButton'
+import { Loader } from '../common/Loader'
 
 const ProductDetail = styled.div`
   background-color: #fff;
@@ -48,11 +50,15 @@ const StyledSizeLabel = styled.span`
 class ProductList extends React.Component {
   state = {
     isBuyModalOpen: false,
+    page: 1,
+    limit: 5,
+    shouldLoadNextPage: true,
   }
 
   componentDidMount() {
     const { fetchProducts } = this.props
-    fetchProducts()
+    const { page, limit } = this.state
+    fetchProducts({ page, limit })
   }
 
   componentWillUnmount() {
@@ -60,38 +66,75 @@ class ProductList extends React.Component {
     clearProducts()
   }
 
+  handleIntersection = event => {
+    if (event.isIntersecting && this.state.shouldLoadNextPage) {
+      this.setState(
+        state => ({
+          page: state.page + 1,
+        }),
+        () => {
+          this.props
+            .fetchProducts({
+              page: this.state.page,
+              limit: this.state.limit,
+            })
+            .then(({ products }) => {
+              if (products.length === 0) {
+                this.setState({ shouldLoadNextPage: false })
+              }
+            })
+        }
+      )
+    }
+  }
+
+  renderLoader = () => {
+    return this.state.shouldLoadNextPage ? <Loader>Loading...</Loader> : null
+  }
+
   render() {
     const { products } = this.props
-    return products.map(product => (
-      <div key={product.id}>
-        <Link to={`products/${product.id}`}>
-          <ProductImageContainer>
-            <img src={product.images[0].fullUrl} alt={product.title} />
-          </ProductImageContainer>
-        </Link>
-        <ProductDetail>
-          <Flex>
-            <FlexItem flexSize={3}>
-              <StyledTitle>{product.title}</StyledTitle>
-              <StyledSizeLabel>
-                {getAvailableSize(product.variants).join(', ')}
-              </StyledSizeLabel>
-              <StyledPrice>{product.price.amount}</StyledPrice>
-            </FlexItem>
-            <FlexItem flexSize={1} alignCenter style={{ textAlign: 'right' }}>
-              <StyledButton
-                type="button"
-                onClick={() => {
-                  this.props.openBuyModal(product)
-                }}
-              >
-                Beli
-              </StyledButton>
-            </FlexItem>
-          </Flex>
-        </ProductDetail>
+    return (
+      <div>
+        {products.map(product => (
+          <div key={product.id}>
+            <Link to={`products/${product.id}`}>
+              <ProductImageContainer>
+                <img src={product.images[0].fullUrl} alt={product.title} />
+              </ProductImageContainer>
+            </Link>
+            <ProductDetail>
+              <Flex>
+                <FlexItem flexSize={3}>
+                  <StyledTitle>{product.title}</StyledTitle>
+                  <StyledSizeLabel>
+                    {getAvailableSize(product.variants).join(', ')}
+                  </StyledSizeLabel>
+                  <StyledPrice>{product.price.amount}</StyledPrice>
+                </FlexItem>
+                <FlexItem
+                  flexSize={1}
+                  alignCenter
+                  style={{ textAlign: 'right' }}
+                >
+                  <StyledButton
+                    type="button"
+                    onClick={() => {
+                      this.props.openBuyModal(product)
+                    }}
+                  >
+                    Beli
+                  </StyledButton>
+                </FlexItem>
+              </Flex>
+            </ProductDetail>
+          </div>
+        ))}
+        <Observer onChange={this.handleIntersection}>
+          <div>{this.renderLoader()}</div>
+        </Observer>
       </div>
-    ))
+    )
   }
 }
 
@@ -103,8 +146,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchProducts() {
-      dispatch(fetchProducts())
+    fetchProducts(params) {
+      return dispatch(fetchProducts(params))
     },
     clearProducts() {
       dispatch(clearProducts())

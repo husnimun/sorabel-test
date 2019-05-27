@@ -33,10 +33,10 @@ export function clearProduct() {
   }
 }
 
-export function fetchProducts() {
+export function fetchProducts(params) {
   return async function(dispatch) {
-    const products = await getProducts()
-    dispatch(addProducts(products))
+    const products = await getProducts(params)
+    return dispatch(addProducts(products))
   }
 }
 

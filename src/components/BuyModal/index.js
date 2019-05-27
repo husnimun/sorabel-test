@@ -72,6 +72,15 @@ class BuyModal extends React.Component {
     selectedColor: null,
   }
 
+  componentDidUpdate() {
+    const { selectedSize, selectedColor } = this.state
+    if (selectedSize && selectedColor) {
+      this.props.handleClose()
+      alert('Barang sista berhasil masuk ke keranjang')
+      this.resetState()
+    }
+  }
+
   renderColorVariant = () => {
     const { product } = this.props
     const availableColor = getAvailableColor(product.variants)
@@ -90,7 +99,6 @@ class BuyModal extends React.Component {
       },
       {}
     )
-    console.log(filteredVariants)
     return availableColor.map((color, index) => (
       <VariantButton
         type="button"
