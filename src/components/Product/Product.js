@@ -9,6 +9,7 @@ import { Divider } from '../common/Divider'
 import { StyledButton } from '../common/StyledButton'
 import { fetchProductById, clearProduct } from '../../store/actions/product'
 import { openBuyModal } from '../../store/actions/buyModal'
+import ImageSlider from './ImagesSlider'
 
 const ProductWrapper = styled.div`
   background-color: #fff;
@@ -58,7 +59,7 @@ class Product extends React.Component {
       const { product, openBuyModal } = this.props
       return (
         <ProductWrapper>
-          <img src={product.images[0].fullUrl} alt={product.title} />
+          <ImageSlider images={product.images} title={product.title} />
           <Divider>
             <ProductTitle>{product.title}</ProductTitle>
             <ProductPrice>{product.price.amount}</ProductPrice>

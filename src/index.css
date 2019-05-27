@@ -47,3 +47,33 @@ p {
   transform: translateY(-100px);
   transition: transform 500ms ease;
 }
+
+.simple-slider {
+  padding: 16px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+.simple-slider li {
+  display: inline-block;
+  list-style: none;
+  width: 54px;
+  height: 54px;
+  cursor: pointer;
+  padding: 2px;
+  margin: 0px 4px;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(196, 196, 196);
+}
+
+.simple-slider li.slick-active {
+  border-color: rgb(172, 20, 90);
+}
+
+.simple-slider img,
+.simple-slider a {
+  width: 48px;
+  height: 48px;
+}
