@@ -7,4 +7,4 @@ before_script:
 script:
   - yarn test --coverage --watchAll=false
 after_success:
-  - test $TRAVIS_BRANCH = "master" && npx codecov --token=$CODECOV_TOKEN
+  - npx codecov --token=$CODECOV_TOKEN
