@@ -1,5 +1,5 @@
+/* istanbul ignore file */
 import { combineReducers } from 'redux'
-
 import { products } from './products'
 import { product } from './product'
 import { isBuyModalOpen } from './isBuyModalOpen'

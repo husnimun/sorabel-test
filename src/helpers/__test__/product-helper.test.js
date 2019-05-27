@@ -104,6 +104,14 @@ describe('Test suite for product-helper', () => {
         size: '0-6 tahun',
       },
     ]
+
+    const expected3 = [
+      {
+        color: 'Red',
+        quantity: 6,
+        size: '2-3 tahun',
+      },
+    ]
     const result1 = productHelper.filterVariantsByColorAndSize(
       input,
       null,
@@ -115,8 +123,15 @@ describe('Test suite for product-helper', () => {
       'Red',
       null
     )
+
+    const result3 = productHelper.filterVariantsByColorAndSize(
+      input,
+      'Red',
+      '2-3 tahun'
+    )
     expect(result1).toEqual(expected1)
     expect(result2).toEqual(expected2)
+    expect(result3).toEqual(expected3)
   })
 
   test('getVariantsAvailabilityMapByType should return correct value', () => {

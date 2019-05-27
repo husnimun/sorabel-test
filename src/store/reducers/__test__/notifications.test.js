@@ -2,6 +2,11 @@ import * as reducers from '../notifications'
 import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from '../../actions/actionList'
 
 describe('test suite for redux reducers', () => {
+  test('notifications reducer: should get default state', () => {
+    const expected = []
+    expect(reducers.notifications(undefined, {})).toEqual(expected)
+  })
+
   test('notifications reducer: should add notification', () => {
     const initialState = []
     const notifications = [

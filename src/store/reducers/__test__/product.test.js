@@ -1,5 +1,9 @@
 import * as reducers from '../product'
-import { SET_PRODUCT, CLEAR_PRODUCT } from '../../actions/actionList'
+import {
+  SET_PRODUCT,
+  CLEAR_PRODUCT,
+  OPEN_BUY_MODAL,
+} from '../../actions/actionList'
 
 describe('test suite for redux reducers', () => {
   test('product reducer: should return initial state', () => {
@@ -37,5 +41,21 @@ describe('test suite for redux reducers', () => {
     }
 
     expect(reducers.product(initialState, action)).toEqual({})
+  })
+
+  test('product reducer: should open buy modal', () => {
+    const initialState = {}
+
+    const expected = {
+      id: 2,
+      title: 'product 2',
+    }
+
+    const action = {
+      type: OPEN_BUY_MODAL,
+      product: expected,
+    }
+
+    expect(reducers.product(initialState, action)).toEqual(expected)
   })
 })
