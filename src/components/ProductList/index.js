@@ -2,25 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchProducts, clearProducts, openBuyModal } from '../../store/actions'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { getAvailableSize } from '../../helpers/product-helpers'
-
-const Flex = styled.div`
-  display: flex;
-`
-const FlexItem = styled.div`
-  ${props =>
-    props.flexSize &&
-    css`
-      flex: ${props.flexSize};
-    `}
-  ${props =>
-    props.alignCenter &&
-    css`
-      margin-top: auto;
-      margin-bottom: auto;
-    `}
-`
+import { Flex, FlexItem } from '../common/Flex'
+import { StyledButton } from '../common/StyledButton'
 
 const ProductDetail = styled.div`
   background-color: #fff;
@@ -35,22 +20,6 @@ const ProductImageContainer = styled.div`
     height: 100%;
     object-fit: cover;
   }
-`
-const StyledButton = styled.button`
-  padding: 8px 16px;
-  border-color: rgb(172, 20, 90);
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 8px;
-  background-color: rgb(172, 20, 90);
-  text-align: center;
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
-  text-transform: uppercase;
-  display: inline-block;
 `
 
 const StyledTitle = styled.h2`
@@ -111,6 +80,7 @@ class ProductList extends React.Component {
             </FlexItem>
             <FlexItem flexSize={1} alignCenter style={{ textAlign: 'right' }}>
               <StyledButton
+                type="button"
                 onClick={() => {
                   this.props.openBuyModal(product)
                 }}

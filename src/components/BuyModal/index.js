@@ -8,6 +8,8 @@ import {
   getAvailableSize,
   filterVariantsByColorAndSize,
 } from '../../helpers/product-helpers'
+import { Flex, FlexItem } from '../common/Flex'
+import { Divider } from '../common/Divider'
 
 Modal.setAppElement('#root')
 
@@ -23,27 +25,6 @@ const StyledModal = styled(Modal)`
   width: 480px;
   height: auto;
   margin: 0 auto;
-`
-
-const SummaryDivider = styled.div`
-  padding: 16px 16px;
-  border-bottom: 1px solid #e8e8e8;
-`
-const Flex = styled.div`
-  display: flex;
-`
-const FlexItem = styled.div`
-  ${props =>
-    props.flexSize &&
-    css`
-      flex: ${props.flexSize};
-    `}
-  ${props =>
-    props.alignCenter &&
-    css`
-      margin-top: auto;
-      margin-bottom: auto;
-    `}
 `
 
 const CloseButton = styled.button`
@@ -112,6 +93,7 @@ class BuyModal extends React.Component {
     console.log(filteredVariants)
     return availableColor.map((color, index) => (
       <VariantButton
+        type="button"
         disabled={!availabilityOfFilteredVariants[color]}
         selected={color === this.state.selectedColor}
         key={`${product.id}-color-${index}`}
@@ -183,6 +165,7 @@ class BuyModal extends React.Component {
         </FlexItem>
         <FlexItem flexSize={1} style={{ textAlign: 'right' }}>
           <CloseButton
+            type="button"
             onClick={() => {
               handleClose()
               this.resetState()
@@ -201,8 +184,8 @@ class BuyModal extends React.Component {
     } else {
       return (
         <div>
-          <SummaryDivider>{this.renderSummary()}</SummaryDivider>
-          <SummaryDivider>
+          <Divider>{this.renderSummary()}</Divider>
+          <Divider>
             <div>
               <p>Pilih warna yang tersedia</p>
               {this.renderColorVariant()}
@@ -211,7 +194,7 @@ class BuyModal extends React.Component {
               <p>Pilih ukuran yang tersedia</p>
               {this.renderSizeVariant()}
             </div>
-          </SummaryDivider>
+          </Divider>
         </div>
       )
     }

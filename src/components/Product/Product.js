@@ -10,14 +10,11 @@ import {
   getAvailableColor,
   getAvailableSize,
 } from '../../helpers/product-helpers'
+import { Divider } from '../common/Divider'
+import { StyledButton } from '../common/StyledButton'
 
 const ProductWrapper = styled.div`
   background-color: #fff;
-`
-
-const SummaryDivider = styled.div`
-  padding: 16px 16px;
-  border-bottom: 1px solid #e8e8e8;
 `
 
 const SummaryTitle = styled.span`
@@ -37,23 +34,6 @@ const ProductTitle = styled.h1`
 const ProductPrice = styled.div`
   color: #ac145a;
   font-size: 20px;
-`
-
-const StyledButton = styled.button`
-  padding: 8px 16px;
-  border-color: rgb(172, 20, 90);
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 8px;
-  background-color: rgb(172, 20, 90);
-  text-align: center;
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
-  text-transform: uppercase;
-  display: inline-block;
 `
 
 class Product extends React.Component {
@@ -82,20 +62,21 @@ class Product extends React.Component {
       return (
         <ProductWrapper>
           <img src={product.images[0].fullUrl} alt={product.title} />
-          <SummaryDivider>
+          <Divider>
             <ProductTitle>{product.title}</ProductTitle>
             <ProductPrice>{product.price.amount}</ProductPrice>
-          </SummaryDivider>
-          <SummaryDivider>
+          </Divider>
+          <Divider>
             <SummaryTitle>Bahan</SummaryTitle>
             {product.material}
-          </SummaryDivider>
-          <SummaryDivider>
+          </Divider>
+          <Divider>
             <p>Warna: {getAvailableColor(product.variants).join(', ')}</p>
             <p>Ukuran: {getAvailableSize(product.variants).join(', ')}</p>
-          </SummaryDivider>
-          <SummaryDivider>
+          </Divider>
+          <Divider>
             <StyledButton
+              type="button"
               style={{ display: 'block', width: '100%' }}
               onClick={() => {
                 openBuyModal(product)
@@ -103,7 +84,7 @@ class Product extends React.Component {
             >
               Beli Sekarang
             </StyledButton>
-          </SummaryDivider>
+          </Divider>
         </ProductWrapper>
       )
     }
