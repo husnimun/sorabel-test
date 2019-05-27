@@ -17,6 +17,8 @@ You will also see any lint errors in the console.
 ### `yarn test`
 
 Launches the test runner in the interactive watch mode.<br>
+Currently, the project has tests for `src/helpers` and `src/store` folders only. You can see the coverage report at [here](https://codecov.io/gh/husnimun/sorabel-test).
+
 
 ### `yarn run build`
 
