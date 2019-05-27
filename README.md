@@ -1,6 +1,7 @@
 [![codecov](https://codecov.io/gh/husnimun/sorabel-test/branch/master/graph/badge.svg)](https://codecov.io/gh/husnimun/sorabel-test)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+You can see the demo at [https://hungry-blackwell-1933ed.netlify.com/](https://hungry-blackwell-1933ed.netlify.com/)
 
 ## Available Scripts
 
