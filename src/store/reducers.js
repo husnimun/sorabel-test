@@ -8,7 +8,7 @@ import {
   CLOSE_BUY_MODAL,
 } from './actions'
 
-function products(state = [], action) {
+export function products(state = [], action) {
   switch (action.type) {
     case ADD_PRODUCTS:
       return [...state, ...action.products]
@@ -19,7 +19,7 @@ function products(state = [], action) {
   }
 }
 
-function product(state = {}, action) {
+export function product(state = {}, action) {
   switch (action.type) {
     case SET_PRODUCT:
       return action.product
@@ -32,7 +32,7 @@ function product(state = {}, action) {
   }
 }
 
-function isBuyModalOpen(state = false, action) {
+export function isBuyModalOpen(state = false, action) {
   switch (action.type) {
     case OPEN_BUY_MODAL:
       return true
