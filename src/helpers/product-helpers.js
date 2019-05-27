@@ -36,3 +36,12 @@ export function filterVariantsByColorAndSize(
     return true
   })
 }
+
+export function getVariantsAvailabilityMapByType(variants, type) {
+  return variants.reduce((acc, variant) => {
+    if (variant.quantity > 0) {
+      acc[variant[type]] = true
+    }
+    return acc
+  }, {})
+}

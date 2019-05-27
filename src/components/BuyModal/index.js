@@ -7,6 +7,7 @@ import {
   getAvailableColor,
   getAvailableSize,
   filterVariantsByColorAndSize,
+  getVariantsAvailabilityMapByType,
 } from '../../helpers/product-helpers'
 import { Flex, FlexItem } from '../common/Flex'
 import { Divider } from '../common/Divider'
@@ -90,14 +91,9 @@ class BuyModal extends React.Component {
       selectedColor,
       selectedSize
     )
-    let availabilityOfFilteredVariants = filteredVariants.reduce(
-      (acc, variant) => {
-        if (variant.quantity > 0) {
-          acc[variant.color] = true
-        }
-        return acc
-      },
-      {}
+    let availabilityOfFilteredVariants = getVariantsAvailabilityMapByType(
+      filteredVariants,
+      'color'
     )
     return availableColor.map((color, index) => (
       <VariantButton
@@ -123,14 +119,9 @@ class BuyModal extends React.Component {
       selectedColor,
       selectedSize
     )
-    let availabilityOfFilteredVariants = filteredVariants.reduce(
-      (acc, variant) => {
-        if (variant.quantity > 0) {
-          acc[variant.size] = true
-        }
-        return acc
-      },
-      {}
+    let availabilityOfFilteredVariants = getVariantsAvailabilityMapByType(
+      filteredVariants,
+      'size'
     )
     return availableSize.map((size, index) => (
       <VariantButton
